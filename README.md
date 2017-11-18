@@ -21,11 +21,16 @@ PyTorch implementation of [Deep Convolutional Generative Adversarial Networks](h
 ### Results
 * The learning rate is 0.0002, batch size is 128 and the optimizer is Adam.
 
-<div align='center'>
-<img src='MNIST_result/result.gif'>
-&nbsp;
-<img src='MNIST_result/result_loss.gif'>
-</div>
+<table align='center'>
+<tr align='center'>
+<td> DCGAN Loss </td>
+<td> Gnerated Images </td>
+</tr>
+<tr>
+<td><img src='MNIST_result/result.gif'>
+<td><img src='MNIST_result/result_loss.gif'>
+</tr>
+</table>
 
 ## References
 1. https://github.com/soumith/dcgan.torch
