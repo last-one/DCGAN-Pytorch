@@ -22,7 +22,7 @@ PyTorch implementation of [Deep Convolutional Generative Adversarial Networks](h
 * The learning rate is 0.0002, batch size is 128 and the optimizer is Adam.
 
 <div align='center'>
-<img src='MNIST_results/result.gif'>
+<img src='MNIST_result/result.gif'>
 </div>
 
 ## References
