@@ -23,6 +23,8 @@ PyTorch implementation of [Deep Convolutional Generative Adversarial Networks](h
 
 <div align='center'>
 <img src='MNIST_result/result.gif'>
+&nbsp;
+<img src='MNIST_result/result_loss.gif'>
 </div>
 
 ## References
