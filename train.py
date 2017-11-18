@@ -61,8 +61,8 @@ def train_net(G, D, args, config):
     criterion = nn.BCELoss().cuda()
 
     # setup optimizer
-    optimizerD = torch.optim.Adam(D.parameters(), lr=config.base_lr, betas=(0.5, 0.999))
-    optimizerG = torch.optim.Adam(G.parameters(), lr=config.base_lr, betas=(0.5, 0.999))
+    optimizerD = torch.optim.Adam(D.parameters(), lr=config.base_lr, betas=(config.beta1, 0.999))
+    optimizerG = torch.optim.Adam(G.parameters(), lr=config.base_lr, betas=(config.beta1, 0.999))
 
     # setup some varibles
     batch_time = AverageMeter()

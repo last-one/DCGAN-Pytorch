@@ -33,7 +33,7 @@ class generator(nn.Module):
             # state size: ngf x 32 x 32
             nn.ConvTranspose2d(self.ngf, self.out_size, 4, 2, 1, bias=False),
             nn.Tanh()
-            # state size: 3 x 64 x 64
+            # state size: out_size x 64 x 64
         )
 
         for m in self.modules():

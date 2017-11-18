@@ -3,14 +3,15 @@ display: 100
 epoches: 20
 batch_size: 128
 base_lr: 0.0002
+betas1: 0.5
+
+dataset: 'mnist'
 image_size: 64
 z_size: 100
 out_size: 1
 ngf: 128
 in_size: 1
 ndf: 128
-dataset: 'mnist'
-betas: [0.5, 0.999]
 #-------------lr_policy--------------------#
 # step
 #lr_policy: 'step'
