@@ -10,6 +10,7 @@ import time
 from easydict import EasyDict as edict
 import yaml
 from PIL import Image
+import imageio
 
 def read_data_file(filename, root=None):
     
