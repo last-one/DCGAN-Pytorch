@@ -25,8 +25,8 @@ All of the transposed convolutional layer and convolutional layer are initilized
 
 <table align='center'>
 <tr align='center'>
-<td> DCGAN Loss </td>
 <td> Gnerated Images </td>
+<td> DCGAN Loss </td>
 </tr>
 <tr>
 <td><img src='MNIST_result/result.gif'>
@@ -41,8 +41,8 @@ All of the transposed convolutional layer and convolutional layer are initilized
 
 <table align='center'>
 <tr align='center'>
-<td> DCGAN Loss </td>
 <td> Gnerated Images </td>
+<td> DCGAN Loss </td>
 </tr>
 <tr>
 <td><img src='CelebA_result/result.gif'>
