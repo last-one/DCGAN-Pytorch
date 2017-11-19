@@ -30,10 +30,10 @@ def parse():
 
 def construct_model(args):
 
-    G = generator(z_size=config.z_size, out_size=config.out_size, ngf=config.ngf).cuda()
+    G = generator(z_size=config.z_size, out_size=config.channel_size, ngf=config.ngf).cuda()
     print 'G network structure'
     print G
-    D = discriminator(in_size=config.in_size, ndf=config.ndf).cuda()
+    D = discriminator(in_size=config.channel_size, ndf=config.ndf).cuda()
     print 'D network structure'
     print D
     return G, D
@@ -42,6 +42,9 @@ def train_net(G, D, args, config):
 
     cudnn.benchmark = True
     traindir = args.train_dir
+
+    if not os.path.exists(args.save_dir):
+        os.makedirs(args.save_dir)
 
     if config.dataset == 'mnist':
         train_loader = torch.utils.data.DataLoader(
@@ -53,7 +56,14 @@ def train_net(G, D, args, config):
                 batch_size=config.batch_size, shuffle=True,
                 num_workers=config.workers, pin_memory=True)
     elif config.dataset == 'celebA':
-        return
+        train_loader = torch.utils.data.DataLoader(
+                MydataFolder(traindir,
+                    transform=transforms.Compose([transforms.Scale(config.image_size),
+                        transforms.ToTensor(),
+                        transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
+                ])),
+                batch_size=config.batch_size, shuffle=True,
+                num_workers=config.workers, pin_memory=True)
     else:
         return
 
@@ -77,6 +87,9 @@ def train_net(G, D, args, config):
 
     D.train()
     G.train()
+
+    D_loss_list = []
+    G_loss_list = []
 
     for epoch in range(config.epoches):
         for i, (input, _) in enumerate(train_loader):
@@ -134,25 +147,34 @@ def train_net(G, D, args, config):
             batch_time.update(time.time() - end)
             end = time.time()
 
-            if (i + 1) % config.display == 0 or (i + 1) == len(train_loader):
+            if (i + 1) % config.display == 0:
                 print_log(epoch + 1, config.epoches, i + 1, len(train_loader), config.base_lr,
                           config.display, batch_time, data_time, D_losses, G_losses)
                 batch_time.reset()
                 data_time.reset()
+            elif (i + 1) == len(train_loader):
+                print_log(epoch + 1, config.epoches, i + 1, len(train_loader), config.base_lr,
+                          (i + 1) % config.display, batch_time, data_time, D_losses, G_losses)
+                batch_time.reset()
+                data_time.reset()
 
+        D_loss_list.append(D_losses.avg)
+        G_loss_list.append(G_losses.avg)
         D_losses.reset()
         G_losses.reset()
 
-        # plt the generate images
-        plot_result(G, fixed_noise, config.image_size, epoch + 1, args.save_dir)
-
+        # plt the generate images and loss curve
+        plot_result(G, fixed_noise, config.image_size, epoch + 1, args.save_dir, is_gray=(config.channel_size == 1))
+        plot_loss(D_loss_list, G_loss_list, epoch + 1, config.epoches, args.save_dir)
         # save the D and G.
         save_checkpoint({'epoch': epoch, 'state_dict': D.state_dict(),}, os.path.join(args.save_dir, 'D_epoch_{}'.format(epoch)))
         save_checkpoint({'epoch': epoch, 'state_dict': G.state_dict(),}, os.path.join(args.save_dir, 'G_epoch_{}'.format(epoch)))
 
+    create_gif(config.epoches, args.save_dir)
+
 if __name__ == '__main__':
 
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 
     args = parse()
     config = Config(args.config)
