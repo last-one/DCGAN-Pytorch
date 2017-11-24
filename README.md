@@ -50,6 +50,22 @@ All of the transposed convolutional layer and convolutional layer are initilized
 </tr>
 </table>
 
+## LSUN dataset
+* For LSUN image, the channel_size is 3. And then, it will be resized to 64 x 64.
+### Results
+* The learning rate is 0.0002, batch size is 1024 and the optimizer is Adam.
+
+<table align='center'>
+<tr align='center'>
+<td> Gnerated Images </td>
+<td> DCGAN Loss </td>
+</tr>
+<tr>
+<td><img src='LSUN_result/result.gif'>
+<td><img src='LSUN_result/result_loss.gif'>
+</tr>
+</table>
+
 ## References
 1. https://github.com/soumith/dcgan.torch
 2. https://github.com/znxlwm/pytorch-MNIST-CelebA-GAN-DCGAN
